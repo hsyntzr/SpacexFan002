@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/rockets"
+        android:id="@+id/rockets"
+        android:icon="@drawable/ic_rocket"/>
+    <item android:title="@string/favorite"
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_star"/>
+    <item
+        android:id="@+id/upcoming"
+        android:icon="@drawable/ic_alarm"
+        android:title="@string/upcoming"
+        />
+</menu>
