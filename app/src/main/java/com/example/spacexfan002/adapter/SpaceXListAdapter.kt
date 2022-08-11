@@ -2,14 +2,13 @@
 
 package com.example.spacexfan002.adapter
 
-import android.annotation.SuppressLint
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spacexfan002.R
@@ -53,7 +52,6 @@ class SpaceXListAdapter( private val listener: Listener) :
     class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val rocketTitle: TextView = view.rocketTitle
         private val rocketImage: ImageView = view.rocketImage
-        private val favBtn: CheckBox = view.favBtn
         fun bind(data: Favorites, listener: Listener) {
 
             itemView.favBtn.isChecked = data.favorite!!
@@ -62,13 +60,11 @@ class SpaceXListAdapter( private val listener: Listener) :
             if (ImageURL != null && !data.upcoming!!) {
                 rocketTitle.text = data.name
                 Glide.with(itemView).load(data.img).into(rocketImage)
-
             } else {
                 rocketTitle.text = data.name
                 rocketImage.visibility = View.GONE
                 itemView.favBtn.visibility = View.GONE
             }
-
 
 
             itemView.setOnClickListener {

@@ -7,5 +7,4 @@ import retrofit2.http.GET
 interface RetroService {
     @GET("v5/launches")
     fun getSpaceXList(): Call<List<SpaceXModel>>
-
 }

@@ -1,14 +1,13 @@
 package com.example.spacexfan002.favorite
 
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexfan002.MainActivity
@@ -20,7 +19,6 @@ import com.example.spacexfan002.favorite.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_rockets.*
 
 
 class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
@@ -35,48 +33,47 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
         auth = Firebase.auth
 
     }
+
     private fun initRecyclerView() {
         binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(context)
         recyclerViewAdapter = SpaceXListAdapter(this)
         binding.favoriteRecyclerView.adapter = recyclerViewAdapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         initRecyclerView()
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
 
-        //İnit  RecyclerView
+
 
         favoriteViewModel.readAllData.observe(viewLifecycleOwner) {
             if (it != null) {
-                recyclerViewAdapter.setSpacexList(it.filter { spacexmodel -> spacexmodel.favorite!! })
+                recyclerViewAdapter.setSpacexList(it.filter { spaceXModel -> spaceXModel.favorite!! })
                 recyclerViewAdapter.notifyDataSetChanged()
-
+                /*if(it.none { favorite -> favorite.favorite!! }){
+                    Toast.makeText(context, "LIST IS EMPTY", Toast.LENGTH_SHORT).show()
+                }*/
                 /*binding.favoriteRecyclerView.also { recycler->
-
                          recycler.layoutManager = LinearLayoutManager(requireContext())
                        recycler.adapter = SpaceXListAdapter(it.filter {it ->
                            it.favorite == true
                         }, this)*/
-
-            } else {
-                Toast.makeText(context, "Bir hata oluştu", Toast.LENGTH_LONG).show()
             }
         }
 
-      /*  favoriteViewModel.readAllData.observe(viewLifecycleOwner, Observer { favoriteList ->
+        /*  favoriteViewModel.readAllData.observe(viewLifecycleOwner, Observer { favoriteList ->
 
-            recyclerViewAdapter.setSpacexList(favoriteList.filter { it ->
-                true
-            })
-            if (favoriteList.size == 0) {
-                Toast.makeText(context, "Liste Boş! ", Toast.LENGTH_LONG).show()
-            }
-        })*/
+              recyclerViewAdapter.setSpacexList(favoriteList.filter { it ->
+                  true
+              })
+              if (favoriteList.size == 0) {
+              }
+          })*/
 
         return binding.root
 
@@ -84,7 +81,7 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backButton.setOnClickListener() {
+        binding.backButton.setOnClickListener {
             auth.signOut()
             (activity as MainActivity).replaceFragment(LoginFragment())
         }
@@ -100,9 +97,18 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
     }
 
     override fun onCheckedClick(checkBox: CheckBox, spaceXModel: Favorites) {
-        val updateFavorites = Favorites(spaceXModel.id,spaceXModel.name,spaceXModel.img,false,spaceXModel.details,spaceXModel.upcoming,spaceXModel.date_precision,spaceXModel.date_local,spaceXModel.flight_number)
+        val updateFavorites = Favorites(
+            spaceXModel.id,
+            spaceXModel.name,
+            spaceXModel.img,
+            false,
+            spaceXModel.details,
+            spaceXModel.upcoming,
+            spaceXModel.date_precision,
+            spaceXModel.date_local,
+            spaceXModel.flight_number
+        )
         favoriteViewModel.updateFavorite(updateFavorites)
-        Toast.makeText(requireContext(), "Kulllanıcı Silindi", Toast.LENGTH_LONG).show()
     }
 
 

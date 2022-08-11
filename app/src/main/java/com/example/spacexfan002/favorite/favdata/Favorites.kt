@@ -16,5 +16,5 @@ data class Favorites(
     var upcoming: Boolean?,
     var date_precision: String?,
     var date_local: String?,
-    var flight_number:Int?
-    ) : Serializable
+    var flight_number: Int?
+) : Serializable

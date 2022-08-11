@@ -2,23 +2,16 @@ package com.example.spacexfan002.upcoming
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexfan002.MainActivity
-import com.example.spacexfan002.R
 import com.example.spacexfan002.adapter.SpaceXListAdapter
-import com.example.spacexfan002.data.SpaceXModel
-import com.example.spacexfan002.databinding.FragmentRocketsBinding
 import com.example.spacexfan002.databinding.FragmentUpcomingBinding
-import com.example.spacexfan002.detail.RocketDetailsFragment
 import com.example.spacexfan002.detail.UpcomingDetailsFragment
 import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.favorite.loginFragment.LoginFragment
@@ -26,10 +19,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_upcoming.*
-import kotlinx.android.synthetic.main.spacex_list.*
 
 class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
-    private val bundle = Bundle()
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerAdapter: SpaceXListAdapter
@@ -45,7 +36,7 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,8 +46,7 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
         initRecyclerView()
         initObservers()
         viewModel?.makeAPICall()
-
-        binding.backButton.setOnClickListener() {
+        binding.backButton.setOnClickListener {
             auth.signOut()
             (activity as MainActivity).replaceFragment(LoginFragment())
         }
@@ -64,7 +54,7 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
 
     private fun initRecyclerView() {
         upcommingRecyclerAdapter.layoutManager = LinearLayoutManager(context)
-        recyclerAdapter = SpaceXListAdapter( this)
+        recyclerAdapter = SpaceXListAdapter(this)
         upcommingRecyclerAdapter.adapter = recyclerAdapter
     }
 
@@ -75,15 +65,13 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
             if (it != null) {
                 recyclerAdapter.setSpacexList(it.filter { List -> List.upcoming!! })
                 recyclerAdapter.notifyDataSetChanged()
-            /*    binding.upcommingRecyclerAdapter.also { recycler->
-                    recycler.layoutManager = LinearLayoutManager(requireContext())
-                   recycler.adapter = SpaceXListAdapter(it.filter { it ->
-                        it.upcoming == true
-                    }, this)*/
+                /*    binding.upcomingRecyclerAdapter.also { recycler->
+                        recycler.layoutManager = LinearLayoutManager(requireContext())
+                       recycler.adapter = SpaceXListAdapter(it.filter { it ->
+                            it.upcoming == true
+                        }, this)*/
 
 
-            } else {
-                Toast.makeText(context, "Bir hata oluştu", Toast.LENGTH_LONG).show()
             }
         }
         /*

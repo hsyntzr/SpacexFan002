@@ -1,8 +1,7 @@
 package com.example.spacexfan002
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.spacexfan002.databinding.ActivityMainBinding
 import com.example.spacexfan002.favorite.FavoriteFragment
@@ -19,11 +18,11 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(LoginFragment())
         binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.rockets -> replaceFragment(RocketsFragment())
                 R.id.upcoming -> replaceFragment(UpcomingFragment())
                 R.id.favorite -> replaceFragment(FavoriteFragment())
-                else ->{
+                else -> {
                 }
 
             }
@@ -32,10 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-     fun replaceFragment(fragment: Fragment){
+    fun replaceFragment(fragment: Fragment) {
         val fragmentManger = supportFragmentManager
         val fragmentTransaction = fragmentManger.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout,fragment)
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
 
     }

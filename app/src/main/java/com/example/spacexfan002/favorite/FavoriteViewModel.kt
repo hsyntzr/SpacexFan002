@@ -16,22 +16,11 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
     private val repository: FavoriteRepository
 
     init {
-        var favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
+        val favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
         repository = FavoriteRepository(favoriteDao)
         readAllData = favoriteDao.readAllData()
     }
 
-    fun addFavorite(favorites: Favorites) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addFavorite(favorites)
-        }
-    }
-
-    fun deleteFavorite(favorites: Favorites) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteFavorite(favorites)
-        }
-    }
     fun updateFavorite(favorites: Favorites) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateFavorite(favorites)

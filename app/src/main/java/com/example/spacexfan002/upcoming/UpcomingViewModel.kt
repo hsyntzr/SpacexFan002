@@ -8,19 +8,13 @@ import com.example.spacexfan002.favorite.favdata.FavoriteRepository
 import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.retrofit.RetroInstance
 import com.example.spacexfan002.retrofit.RetroService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-
-class UpcomingViewModel  (application: Application): AndroidViewModel(application) {
+class UpcomingViewModel(application: Application) : AndroidViewModel(application) {
     var liveDataList: MutableLiveData<List<SpaceXModel>> = MutableLiveData()
-    fun getLiveDataOBServer(): MutableLiveData<List<SpaceXModel>> {
-        return liveDataList
-    }
 
     fun makeAPICall() {
         val retroInstance = RetroInstance.getRetroInstance()
@@ -40,30 +34,16 @@ class UpcomingViewModel  (application: Application): AndroidViewModel(applicatio
         })
     }
 
-    var favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
-    val readAllData: List<Favorites>? = null
-
     private val repository: FavoriteRepository
 
     init {
-        var favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
+        val favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
         repository = FavoriteRepository(favoriteDao)
     }
 
 
-    fun addList(list: List<SpaceXModel>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addList(list)
-        }
-    }
-
-    fun getAllList() : LiveData<List<Favorites>> {
+    fun getAllList(): LiveData<List<Favorites>> {
         return repository.readAllData
     }
 
-    fun addFavorite(favorites: Favorites) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addFavorite(favorites)
-        }
-    }
 }
