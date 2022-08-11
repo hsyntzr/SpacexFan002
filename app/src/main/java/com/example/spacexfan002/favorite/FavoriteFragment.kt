@@ -20,7 +20,7 @@ import com.example.spacexfan002.favorite.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
+import kotlinx.android.synthetic.main.fragment_rockets.*
 
 
 class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
@@ -35,29 +35,34 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
         auth = Firebase.auth
 
     }
+    private fun initRecyclerView() {
+        binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerViewAdapter = SpaceXListAdapter(this)
+        binding.favoriteRecyclerView.adapter = recyclerViewAdapter
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-
+        initRecyclerView()
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
 
         //İnit  RecyclerView
-       /* binding.favoriteRecyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerViewAdapter = SpaceXListAdapter(arrayListOf(),this)
-        binding.favoriteRecyclerView.adapter = recyclerViewAdapter*/
 
         favoriteViewModel.readAllData.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.favoriteRecyclerView.also { recycler->
-                    recycler.layoutManager = LinearLayoutManager(requireContext())
-                    recycler.adapter = SpaceXListAdapter(it.filter {it ->
-                        it.favorite == true
-                    }, this)
-                }
-                //recyclerViewAdapter.setSpacexList(it.filter { spacexmodel -> spacexmodel.favorite!! })
+                recyclerViewAdapter.setSpacexList(it.filter { spacexmodel -> spacexmodel.favorite!! })
+                recyclerViewAdapter.notifyDataSetChanged()
+
+                /*binding.favoriteRecyclerView.also { recycler->
+
+                         recycler.layoutManager = LinearLayoutManager(requireContext())
+                       recycler.adapter = SpaceXListAdapter(it.filter {it ->
+                           it.favorite == true
+                        }, this)*/
+
             } else {
                 Toast.makeText(context, "Bir hata oluştu", Toast.LENGTH_LONG).show()
             }

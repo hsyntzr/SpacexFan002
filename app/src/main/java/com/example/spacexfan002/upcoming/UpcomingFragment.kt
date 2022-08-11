@@ -63,9 +63,9 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
     }
 
     private fun initRecyclerView() {
-       /* upcommingRecyclerAdapter.layoutManager = LinearLayoutManager(context)
+        upcommingRecyclerAdapter.layoutManager = LinearLayoutManager(context)
         recyclerAdapter = SpaceXListAdapter( this)
-        upcommingRecyclerAdapter.adapter = recyclerAdapter*/
+        upcommingRecyclerAdapter.adapter = recyclerAdapter
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -73,15 +73,15 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
 
         viewModel?.getAllList()?.observe(viewLifecycleOwner) {
             if (it != null) {
-                binding.upcommingRecyclerAdapter.also { recycler->
+                recyclerAdapter.setSpacexList(it.filter { List -> List.upcoming!! })
+                recyclerAdapter.notifyDataSetChanged()
+            /*    binding.upcommingRecyclerAdapter.also { recycler->
                     recycler.layoutManager = LinearLayoutManager(requireContext())
-                    recycler.adapter = SpaceXListAdapter(it.filter { it ->
+                   recycler.adapter = SpaceXListAdapter(it.filter { it ->
                         it.upcoming == true
-                    }, this)
-                }
-               /* recyclerAdapter.setSpacexList(it.filter { List -> List.upcoming!! })
+                    }, this)*/
 
-                recyclerAdapter.notifyDataSetChanged()*/
+
             } else {
                 Toast.makeText(context, "Bir hata oluştu", Toast.LENGTH_LONG).show()
             }

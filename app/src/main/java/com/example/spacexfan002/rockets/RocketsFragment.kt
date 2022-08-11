@@ -31,6 +31,8 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
     private var _binding: FragmentRocketsBinding? = null
     private val binding get() = _binding!!
     var viewModel: RocketViewModel? = null
+    private lateinit var recyclerAdapter: SpaceXListAdapter
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,26 +66,28 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
     }
 
     private fun initRecyclerView() {
-       /* recyclerViewRocket.layoutManager = LinearLayoutManager(context)
+        recyclerViewRocket.layoutManager = LinearLayoutManager(context)
         recyclerAdapter = SpaceXListAdapter(this)
-        recyclerViewRocket.adapter = recyclerAdapter*/
+        recyclerViewRocket.adapter = recyclerAdapter
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
 
             viewModel?.getAllList()?.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.recyclerViewRocket.also { recycler->
+                if (it != null) {
+                    recyclerAdapter.setSpacexList(it.filter { spacexmodel -> !spacexmodel.upcoming!! })
+                    recyclerAdapter.notifyDataSetChanged()
+                }
+               /* binding.recyclerViewRocket.also { recycler->
                     recycler.layoutManager = LinearLayoutManager(requireContext())
                     recycler.adapter = SpaceXListAdapter(it.filter { it ->
                     it.upcoming == false
 
                     }, this)
-                }
-               /* recyclerAdapter.setSpacexList(it.filter { spacexmodel -> !spacexmodel.upcoming!! })
-                recyclerAdapter.notifyDataSetChanged()*/
-            } else {
+                }*/
+            else {
                 Toast.makeText(context, "Bir hata oluştu", Toast.LENGTH_LONG).show()
             }
         }

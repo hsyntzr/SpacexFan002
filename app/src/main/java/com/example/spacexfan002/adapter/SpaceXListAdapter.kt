@@ -16,17 +16,16 @@ import com.example.spacexfan002.R
 import com.example.spacexfan002.favorite.favdata.Favorites
 import kotlinx.android.synthetic.main.spacex_list.view.*
 
-class SpaceXListAdapter(private val spacexList: List<Favorites>?,private val listener: Listener) :
+class SpaceXListAdapter( private val listener: Listener) :
     RecyclerView.Adapter<SpaceXListAdapter.myViewHolder>() {
-
+    private var spacexList: List<Favorites>? = null
     interface Listener {
         fun onItemClick(spaceXModel: Favorites)
         fun onCheckedClick(checkBox: CheckBox, spaceXModel: Favorites)
     }
-
-   /* fun setSpacexList(rockets: List<Favorites>) {
+    fun setSpacexList(rockets: List<Favorites>) {
         this.spacexList = rockets
-    }*/
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
