@@ -36,8 +36,6 @@ class SpaceXListAdapter( private val listener: Listener) :
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         holder.bind(spacexList?.get(position)!!, listener)
-
-
     }
 
     override fun getItemCount(): Int {
@@ -60,6 +58,7 @@ class SpaceXListAdapter( private val listener: Listener) :
             if (ImageURL != null && !data.upcoming!!) {
                 rocketTitle.text = data.name
                 Glide.with(itemView).load(data.img).into(rocketImage)
+
             } else {
                 rocketTitle.text = data.name
                 rocketImage.visibility = View.GONE

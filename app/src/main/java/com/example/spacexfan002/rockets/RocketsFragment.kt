@@ -15,7 +15,7 @@ import com.example.spacexfan002.adapter.SpaceXListAdapter
 import com.example.spacexfan002.databinding.FragmentRocketsBinding
 import com.example.spacexfan002.detail.RocketDetailsFragment
 import com.example.spacexfan002.favorite.favdata.Favorites
-import com.example.spacexfan002.favorite.loginFragment.LoginFragment
+import com.example.spacexfan002.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -76,14 +76,6 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
                 recyclerAdapter.setSpacexList(it.filter { spaceXModel -> !spaceXModel.upcoming!! })
                 recyclerAdapter.notifyDataSetChanged()
             }
-            /* binding.recyclerViewRocket.also { recycler->
-                 recycler.layoutManager = LinearLayoutManager(requireContext())
-                 recycler.adapter = SpaceXListAdapter(it.filter { it ->
-                 it.upcoming == false
-
-                 }, this)
-             }*/
-
         }
     }
 
@@ -108,7 +100,8 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
             spaceXModel.upcoming,
             spaceXModel.date_precision,
             spaceXModel.date_local,
-            spaceXModel.flight_number
+            spaceXModel.flight_number,
+            spaceXModel.original
         )
         viewModel?.updateFavorite(updateFavorites)
     }

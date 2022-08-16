@@ -15,7 +15,7 @@ import com.example.spacexfan002.adapter.SpaceXListAdapter
 import com.example.spacexfan002.databinding.FragmentFavoriteBinding
 import com.example.spacexfan002.detail.RocketDetailsFragment
 import com.example.spacexfan002.favorite.favdata.Favorites
-import com.example.spacexfan002.favorite.loginFragment.LoginFragment
+import com.example.spacexfan002.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -106,7 +106,8 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
             spaceXModel.upcoming,
             spaceXModel.date_precision,
             spaceXModel.date_local,
-            spaceXModel.flight_number
+            spaceXModel.flight_number,
+            spaceXModel.original
         )
         favoriteViewModel.updateFavorite(updateFavorites)
     }

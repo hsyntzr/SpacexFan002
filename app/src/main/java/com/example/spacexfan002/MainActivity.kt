@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.spacexfan002.databinding.ActivityMainBinding
 import com.example.spacexfan002.favorite.FavoriteFragment
-import com.example.spacexfan002.favorite.loginFragment.LoginFragment
+import com.example.spacexfan002.loginFragment.LoginFragment
 import com.example.spacexfan002.rockets.RocketsFragment
 import com.example.spacexfan002.upcoming.UpcomingFragment
 

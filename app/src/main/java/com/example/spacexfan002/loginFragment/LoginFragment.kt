@@ -1,4 +1,4 @@
-package com.example.spacexfan002.favorite.loginFragment
+package com.example.spacexfan002.loginFragment
 
 
 import android.os.Bundle
@@ -37,23 +37,22 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.loginBtn.setOnClickListener() {
+        binding.loginBtn.setOnClickListener {
             signInBtn()
         }
     }
 
 
-    fun signInBtn() {
+    private fun signInBtn() {
         val email = loginEmail.text.toString()
         val password = loginPassword.text.toString()
 

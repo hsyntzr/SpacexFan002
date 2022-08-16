@@ -9,14 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
         <ImageView
             android:id="@+id/backButton"
             android:layout_width="30dp"
             android:layout_margin="16dp"
             android:layout_height="30dp"
             android:src="@drawable/backbutton"
-            />
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/title"
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:gravity="center"
-            android:text="SpaceX Upcoming"
+            android:text="@string/spacex_upcoming"
             android:textColor="@color/white"
             android:textSize="17.3sp"
             android:layout_marginEnd="40dp"

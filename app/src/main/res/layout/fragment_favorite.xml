@@ -15,7 +15,9 @@
             android:src="@drawable/backbutton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            />
+
+            android:contentDescription="TODO"
+            tools:ignore="ContentDescription,HardcodedText" />
 
         <TextView
             android:id="@+id/title"
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:gravity="center"
-            android:text="SpaceX Favorite"
+            android:text="@string/spacex_favorite"
             android:textColor="@color/white"
             android:textSize="17.3sp"
             android:layout_marginEnd="0dp"

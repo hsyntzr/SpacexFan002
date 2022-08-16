@@ -14,7 +14,7 @@ import com.example.spacexfan002.adapter.SpaceXListAdapter
 import com.example.spacexfan002.databinding.FragmentUpcomingBinding
 import com.example.spacexfan002.detail.UpcomingDetailsFragment
 import com.example.spacexfan002.favorite.favdata.Favorites
-import com.example.spacexfan002.favorite.loginFragment.LoginFragment
+import com.example.spacexfan002.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -65,13 +65,6 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
             if (it != null) {
                 recyclerAdapter.setSpacexList(it.filter { List -> List.upcoming!! })
                 recyclerAdapter.notifyDataSetChanged()
-                /*    binding.upcomingRecyclerAdapter.also { recycler->
-                        recycler.layoutManager = LinearLayoutManager(requireContext())
-                       recycler.adapter = SpaceXListAdapter(it.filter { it ->
-                            it.upcoming == true
-                        }, this)*/
-
-
             }
         }
         /*

@@ -10,4 +10,8 @@
     <string name="email">  E-Mail</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
+    <string name="spacex_rockets">SpaceX Rockets</string>
+    <string name="spacex_upcoming">SpaceX Upcoming</string>
+    <string name="spacex_details">SpaceX Details</string>
+    <string name="spacex_favorite">SpaceX Favorite</string>
 </resources>
