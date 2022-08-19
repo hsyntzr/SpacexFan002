@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/loginbackground"
-    tools:context=".loginFragment.LoginFragment"
-    >
+    tools:context=".loginFragment.LoginFragment">
 
     <ImageView
         android:id="@+id/logo"
@@ -27,6 +26,7 @@
         android:layout_width="328dp"
         android:layout_height="44dp"
         android:layout_marginTop="23dp"
+        android:autofillHints="no"
         android:background="@drawable/rounded_edittext"
         android:drawableStart="@drawable/email"
         android:drawablePadding="8dp"
@@ -37,15 +37,14 @@
         app:layout_constraintCircleRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        android:autofillHints="no"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <EditText
         android:id="@+id/loginPassword"
         android:layout_width="328dp"
         android:layout_height="44dp"
         android:layout_marginTop="22dp"
+        android:autofillHints="no"
         android:background="@drawable/rounded_edittext"
         android:drawableStart="@drawable/password"
         android:drawablePadding="8dp"
@@ -56,7 +55,6 @@
         app:layout_constraintEnd_toEndOf="@+id/loginEmail"
         app:layout_constraintStart_toStartOf="@+id/loginEmail"
         app:layout_constraintTop_toBottomOf="@+id/loginEmail"
-        android:autofillHints="no"
 
         />
 
@@ -78,6 +76,37 @@
         app:layout_constraintLeft_toLeftOf="@id/loginPassword"
         app:layout_constraintRight_toRightOf="@id/loginPassword"
         app:layout_constraintTop_toBottomOf="@id/loginPassword"
+        tools:layout_editor_absoluteX="-29dp"
+        tools:layout_editor_absoluteY="419dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/or"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/registerbtn"
+        app:layout_constraintTop_toTopOf="@id/loginBtn" />
+
+    <Button
+        android:id="@+id/registerbtn"
+        android:layout_width="210dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/rounded_edittext"
+        android:gravity="center"
+        android:shadowColor="#28000000"
+        android:shadowDx="0"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:text="@string/Register"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/loginBtn"
+        app:layout_constraintRight_toRightOf="@id/loginBtn"
+        app:layout_constraintTop_toBottomOf="@id/loginBtn"
         tools:layout_editor_absoluteX="-29dp"
         tools:layout_editor_absoluteY="419dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

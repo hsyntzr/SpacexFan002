@@ -10,7 +10,7 @@ import com.example.spacexfan002.rockets.RocketsFragment
 import com.example.spacexfan002.upcoming.UpcomingFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -24,11 +24,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.favorite -> replaceFragment(FavoriteFragment())
                 else -> {
                 }
-
             }
             true
         }
-
     }
 
     fun replaceFragment(fragment: Fragment) {

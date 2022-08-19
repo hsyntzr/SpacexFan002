@@ -14,10 +14,8 @@ abstract class FavoriteDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        // private var INSTANCE: FavoriteDatabase? = null
         var tempInstance: FavoriteDatabase? = null
         fun getDatabase(context: Context): FavoriteDatabase {
-
             if (tempInstance != null) {
                 return tempInstance as FavoriteDatabase
             }

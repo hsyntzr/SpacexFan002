@@ -31,7 +31,7 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-
+        println(auth.currentUser!!.email)
     }
 
     private fun initRecyclerView() {
@@ -48,35 +48,13 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         initRecyclerView()
         favoriteViewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
-
-
-
         favoriteViewModel.readAllData.observe(viewLifecycleOwner) {
             if (it != null) {
                 recyclerViewAdapter.setSpacexList(it.filter { spaceXModel -> spaceXModel.favorite!! })
                 recyclerViewAdapter.notifyDataSetChanged()
-                /*if(it.none { favorite -> favorite.favorite!! }){
-                    Toast.makeText(context, "LIST IS EMPTY", Toast.LENGTH_SHORT).show()
-                }*/
-                /*binding.favoriteRecyclerView.also { recycler->
-                         recycler.layoutManager = LinearLayoutManager(requireContext())
-                       recycler.adapter = SpaceXListAdapter(it.filter {it ->
-                           it.favorite == true
-                        }, this)*/
             }
         }
-
-        /*  favoriteViewModel.readAllData.observe(viewLifecycleOwner, Observer { favoriteList ->
-
-              recyclerViewAdapter.setSpacexList(favoriteList.filter { it ->
-                  true
-              })
-              if (favoriteList.size == 0) {
-              }
-          })*/
-
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,7 +63,6 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
             auth.signOut()
             (activity as MainActivity).replaceFragment(LoginFragment())
         }
-
     }
 
     override fun onItemClick(spaceXModel: Favorites) {

@@ -15,16 +15,14 @@ import com.example.spacexfan002.databinding.FragmentDetailsBinding
 import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.rockets.RocketViewModel
 import com.example.spacexfan002.rockets.RocketsFragment
-import kotlinx.android.synthetic.main.fragment_details.*
 
 
-class RocketDetailsFragment : Fragment()  {
+class RocketDetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private var viewModel: RocketViewModel? = null
     private var updateFavorites: Favorites? = null
     private lateinit var recyclerAdapter: ImageContainerAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +45,11 @@ class RocketDetailsFragment : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val spaceXModel = this.arguments?.getSerializable("SpaceXModel") as Favorites
         super.onViewCreated(view, savedInstanceState)
-        rocketName.text = "NAME: " + spaceXModel.name
-        Glide.with(this).load(spaceXModel.img).into(imageView)
-        textView2.text = "Details: " + spaceXModel.details
-        textView.text = "Flight Number: " + spaceXModel.flight_number.toString()
-        textView4.text = "Date Local: " + spaceXModel.date_local.toString()
+        binding.rocketName.text = "NAME: " + spaceXModel.name
+        Glide.with(this).load(spaceXModel.img).into(binding.imageView)
+        binding.textView2.text = "Details: " + spaceXModel.details
+        binding.textView.text = "Flight Number: " + spaceXModel.flight_number.toString()
+        binding.textView4.text = "Date Local: " + spaceXModel.date_local.toString()
 
         binding.favBtn.setOnCheckedChangeListener { _, _ ->
             favChecked(spaceXModel)
@@ -99,7 +97,7 @@ class RocketDetailsFragment : Fragment()  {
     private fun initRecyclerView(favorites: ArrayList<String>) {
         binding.recyclerViewDetails.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerAdapter = ImageContainerAdapter(favorites)
-        recyclerViewDetails.adapter = recyclerAdapter
+        binding.recyclerViewDetails.adapter = recyclerAdapter
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -110,14 +108,6 @@ class RocketDetailsFragment : Fragment()  {
                 recyclerAdapter.setSpacexList(favorites)
                 recyclerAdapter.notifyDataSetChanged()
             }
-            /* binding.recyclerViewRocket.also { recycler->
-                 recycler.layoutManager = LinearLayoutManager(requireContext())
-                 recycler.adapter = SpaceXListAdapter(it.filter { it ->
-                 it.upcoming == false
-
-                 }, this)
-             }*/
-
         }
     }
 

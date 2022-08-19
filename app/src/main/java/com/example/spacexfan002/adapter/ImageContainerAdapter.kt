@@ -2,12 +2,12 @@ package com.example.spacexfan002.adapter
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spacexfan002.R
-import kotlinx.android.synthetic.main.image_container.view.*
+import com.example.spacexfan002.databinding.ImageContainerBinding
+
 
 class ImageContainerAdapter(spaceXListOriginal: List<String>) : RecyclerView.Adapter<ImageContainerAdapter.myViewHolder>() {
 
@@ -18,9 +18,8 @@ class ImageContainerAdapter(spaceXListOriginal: List<String>) : RecyclerView.Ada
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.image_container, parent, false)
-        return myViewHolder(view)
+        val binding = ImageContainerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return  myViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
@@ -33,11 +32,9 @@ class ImageContainerAdapter(spaceXListOriginal: List<String>) : RecyclerView.Ada
     }
 
     @Suppress("ClassName")
-    class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+    class myViewHolder(binding: ImageContainerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: String) {
-
-                Glide.with(itemView).load(data).into(itemView.imageViewDetails)
+                Glide.with(itemView).load(data).into(itemView.findViewById(R.id.imageViewDetails))
                 println(data)
         }
     }

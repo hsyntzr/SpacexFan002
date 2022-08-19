@@ -18,7 +18,6 @@ import com.example.spacexfan002.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_upcoming.*
 
 class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
     private var _binding: FragmentUpcomingBinding? = null
@@ -30,7 +29,6 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[UpcomingViewModel::class.java]
         auth = Firebase.auth
-
     }
 
     override fun onCreateView(
@@ -53,57 +51,21 @@ class UpcomingFragment : Fragment(), SpaceXListAdapter.Listener {
     }
 
     private fun initRecyclerView() {
-        upcommingRecyclerAdapter.layoutManager = LinearLayoutManager(context)
+        binding.upcommingRecyclerAdapter.layoutManager = LinearLayoutManager(context)
         recyclerAdapter = SpaceXListAdapter(this)
-        upcommingRecyclerAdapter.adapter = recyclerAdapter
+        binding.upcommingRecyclerAdapter.adapter = recyclerAdapter
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
-
         viewModel?.getAllList()?.observe(viewLifecycleOwner) {
             if (it != null) {
                 recyclerAdapter.setSpacexList(it.filter { List -> List.upcoming!! })
                 recyclerAdapter.notifyDataSetChanged()
             }
         }
-        /*
-        viewModel?.getLiveDataOBServer()?.observe(viewLifecycleOwner) {
-            if ( spacexModel != null) {
-                recyclerAdapter.setSpacexList(spacexModel.filter{it.upcoming})
-                recyclerAdapter.notifyDataSetChanged()
-
-            } else {
-                Log.d("Debug h", "line 56")
-            }
-        }*/
     }
 
-    /*
-        override fun onItemClick(item: Favorites) {
-
-            bundle.putString("upcomingName",item.name)
-            bundle.putString("upcomingDate", item.date_local)
-            bundle.putInt("upcomingFlight",item.flight_number)
-            bundle.putString("upcomingID",item.id)
-            bundle.putString("upcomingPrecision",item.date_precision)
-            bundle.putString("upcomingImage",item.links?.patch?.small)
-
-            bundle.putSerializable("spaceModel", spaceXModel)
-            val fragment = UpcomingDetailsFragment()
-
-            fragment.arguments = bundle
-
-            (activity as MainActivity).replaceFragment(fragment)
-        }
-
-        override fun onCheckedClick(checkBox: CheckBox, spaceXModel: SpaceXModel) {
-
-            if (favBtn.isChecked) {
-                println("")
-            }
-        }
-    */
     override fun onItemClick(spaceXModel: Favorites) {
         val bundle = Bundle()
         bundle.putSerializable("SpaceXModelUpcoming", spaceXModel)

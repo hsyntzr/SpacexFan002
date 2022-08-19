@@ -41,7 +41,6 @@ class UpcomingViewModel(application: Application) : AndroidViewModel(application
         repository = FavoriteRepository(favoriteDao)
     }
 
-
     fun getAllList(): LiveData<List<Favorites>> {
         return repository.readAllData
     }

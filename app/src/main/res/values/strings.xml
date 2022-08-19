@@ -14,4 +14,6 @@
     <string name="spacex_upcoming">SpaceX Upcoming</string>
     <string name="spacex_details">SpaceX Details</string>
     <string name="spacex_favorite">SpaceX Favorite</string>
+    <string name="Register">register</string>
+    <string name="or">---OR---</string>
 </resources>

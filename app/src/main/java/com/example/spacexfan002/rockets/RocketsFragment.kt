@@ -3,11 +3,11 @@ package com.example.spacexfan002.rockets
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexfan002.MainActivity
@@ -18,9 +18,11 @@ import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.loginFragment.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_rockets.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 
 
 class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
@@ -28,14 +30,17 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
     private val binding get() = _binding!!
     private var viewModel: RocketViewModel? = null
     private lateinit var recyclerAdapter: SpaceXListAdapter
-
+    private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[RocketViewModel::class.java]
-        (activity as MainActivity).bottomNavigationView.visibility = View.VISIBLE
+        (activity as MainActivity).binding.bottomNavigationView.visibility = View.VISIBLE
         auth = Firebase.auth
+        firestore = Firebase.firestore
+        storage = Firebase.storage
     }
 
     override fun onCreateView(
@@ -62,9 +67,9 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
     }
 
     private fun initRecyclerView() {
-        recyclerViewRocket.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewRocket.layoutManager = LinearLayoutManager(context)
         recyclerAdapter = SpaceXListAdapter(this)
-        recyclerViewRocket.adapter = recyclerAdapter
+        binding.recyclerViewRocket.adapter = recyclerAdapter
     }
 
 
@@ -105,6 +110,7 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
         )
         viewModel?.updateFavorite(updateFavorites)
     }
-
 }
+
+
 

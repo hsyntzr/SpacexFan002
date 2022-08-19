@@ -13,8 +13,6 @@ import com.example.spacexfan002.rockets.RocketsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
 
@@ -30,7 +28,7 @@ class LoginFragment : Fragment() {
         if (currentUser != null) {
             (activity as MainActivity).replaceFragment(RocketsFragment())
         }
-        (activity as MainActivity).bottomNavigationView.visibility = View.GONE
+        (activity as MainActivity).binding.bottomNavigationView.visibility = View.GONE
 
     }
 
@@ -38,7 +36,6 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -49,25 +46,26 @@ class LoginFragment : Fragment() {
         binding.loginBtn.setOnClickListener {
             signInBtn()
         }
+        binding.registerbtn.setOnClickListener{
+            (activity as MainActivity).replaceFragment(RegisterFragment())
+        }
     }
 
 
     private fun signInBtn() {
-        val email = loginEmail.text.toString()
-        val password = loginPassword.text.toString()
+        val email = binding.loginEmail.text.toString()
+        val password = binding.loginPassword.text.toString()
 
         if (email.isEmpty() && password.isEmpty()) {
             Toast.makeText(context, "Enter email and password! ", Toast.LENGTH_LONG).show()
         } else {
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
                 val mainActivity = (activity as MainActivity)
-                mainActivity.bottomNavigationView.visibility = View.VISIBLE
+                mainActivity.binding.bottomNavigationView.visibility = View.VISIBLE
                 mainActivity.replaceFragment(RocketsFragment())
-
             }.addOnFailureListener {
                 Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
             }
-
         }
     }
 

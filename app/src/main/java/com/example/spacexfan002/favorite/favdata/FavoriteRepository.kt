@@ -14,8 +14,6 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
     }
 
     fun addList(list: List<SpaceXModel>) {
-        Log.d("Fatih", "addlist worked.")
-
         for (item in list) {
             val favorite = Favorites(
                 id = item.id,
@@ -29,8 +27,6 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
                 flight_number = item.flight_number,
                 original = item.links?.flickr?.original!!
             )
-
-
             favoriteDao.addFavorite(favorite)
         }
     }

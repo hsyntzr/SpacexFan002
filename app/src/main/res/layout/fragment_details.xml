@@ -21,7 +21,7 @@
         android:layout_width="30dp"
         android:layout_margin="16dp"
         android:layout_height="30dp"
-        android:gravity=""
+        android:gravity="center"
         android:src="@drawable/backbutton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -140,7 +140,7 @@
                 android:id="@+id/recyclerViewDetails"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
         </LinearLayout>
     </ScrollView>
