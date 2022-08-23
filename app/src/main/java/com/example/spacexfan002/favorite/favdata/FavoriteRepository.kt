@@ -1,21 +1,20 @@
 package com.example.spacexfan002.favorite.favdata
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.spacexfan002.data.SpaceXModel
+import kotlinx.coroutines.flow.Flow
 
 class FavoriteRepository(private val favoriteDao: FavoriteDao) {
-
-    val readAllData: LiveData<List<Favorites>> = favoriteDao.readAllData()
-
     fun updateFavorite(favorites: Favorites) {
-        Log.d("fatih", "update fav worked.")
         favoriteDao.updateFavorite(favorites)
+    }
+    fun getFavorite(mId : String) : Favorites{
+        return favoriteDao.getFavorite(mId)
     }
 
     fun addList(list: List<SpaceXModel>) {
+
         for (item in list) {
-            val favorite = Favorites(
+            var favorite = Favorites(
                 id = item.id,
                 name = item.name.toString(),
                 img = item.links?.patch?.small,
@@ -28,7 +27,11 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
                 original = item.links?.flickr?.original!!
             )
             favoriteDao.addFavorite(favorite)
+
         }
     }
 
+    fun getAllList() : Flow<List<Favorites>> {
+        return favoriteDao.readAllData()
+    }
 }

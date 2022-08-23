@@ -2,23 +2,32 @@ package com.example.spacexfan002.rockets
 
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.spacexfan002.data.SpaceXModel
+import com.example.spacexfan002.favorite.favdata.FavoriteDao
 import com.example.spacexfan002.favorite.favdata.FavoriteDatabase
 import com.example.spacexfan002.favorite.favdata.FavoriteRepository
 import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.retrofit.RetroInstance
 import com.example.spacexfan002.retrofit.RetroService
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RocketViewModel(application: Application) : AndroidViewModel(application) {
-     private val repository: FavoriteRepository
+    private val repository: FavoriteRepository
+    private var firestore: FirebaseFirestore = Firebase.firestore
+    private lateinit var favoriteDao: FavoriteDao
+    val  allListLivedata = MutableLiveData<List<Favorites>>()
+
     init {
         val favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
         repository = FavoriteRepository(favoriteDao)
@@ -37,7 +46,7 @@ class RocketViewModel(application: Application) : AndroidViewModel(application) 
             }
 
             override fun onFailure(call: Call<List<SpaceXModel>>, t: Throwable) {
-                println("Rocket View Model 40")
+
             }
         })
     }
@@ -45,11 +54,20 @@ class RocketViewModel(application: Application) : AndroidViewModel(application) 
     fun addList(list: List<SpaceXModel>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addList(list)
+
+            checkStorage()
         }
     }
 
-    fun getAllList(): LiveData<List<Favorites>> {
-        return repository.readAllData
+    fun listenAllList(lifecycle: Lifecycle, scope: LifecycleCoroutineScope,) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllList()
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .onEach {
+                    allListLivedata.postValue(it)
+                }
+                .launchIn(scope)
+        }
     }
 
     fun updateFavorite(favorites: Favorites) {
@@ -57,4 +75,28 @@ class RocketViewModel(application: Application) : AndroidViewModel(application) 
             repository.updateFavorite(favorites)
         }
     }
+
+    private fun checkStorage() {
+        firestore.collection("Favorites").addSnapshotListener { value, error ->
+            Log.d("error ", error?.localizedMessage.toString())
+
+            if (value != null) {
+                if (!value.isEmpty) {
+                    val documents = value.documents
+                    viewModelScope.launch(Dispatchers.IO) {
+                        for (document in documents) {
+
+                            val id = document.get("id") as String
+                            val favorite = repository.getFavorite(id)
+                            if (favorite != null){
+                                favorite.favorite = true
+                                repository.updateFavorite(favorite)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

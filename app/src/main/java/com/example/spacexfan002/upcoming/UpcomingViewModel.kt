@@ -8,41 +8,32 @@ import com.example.spacexfan002.favorite.favdata.FavoriteRepository
 import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.retrofit.RetroInstance
 import com.example.spacexfan002.retrofit.RetroService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class UpcomingViewModel(application: Application) : AndroidViewModel(application) {
-    var liveDataList: MutableLiveData<List<SpaceXModel>> = MutableLiveData()
-
-    fun makeAPICall() {
-        val retroInstance = RetroInstance.getRetroInstance()
-        val retroService = retroInstance.create(RetroService::class.java)
-        val call = retroService.getSpaceXList()
-        call.enqueue(object : Callback<List<SpaceXModel>> {
-            override fun onResponse(
-                call: Call<List<SpaceXModel>>,
-                response: Response<List<SpaceXModel>>
-            ) {
-                liveDataList.postValue(response.body())
-            }
-
-            override fun onFailure(call: Call<List<SpaceXModel>>, t: Throwable) {
-                println("Upcoming View Model 40")
-            }
-        })
-    }
-
     private val repository: FavoriteRepository
+    val readAllData  = MutableLiveData<List<Favorites>>()
 
     init {
         val favoriteDao = FavoriteDatabase.getDatabase(application).favoriteDao()
         repository = FavoriteRepository(favoriteDao)
     }
 
-    fun getAllList(): LiveData<List<Favorites>> {
-        return repository.readAllData
+    fun listenAllList(lifecycle : Lifecycle, scope: LifecycleCoroutineScope){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getAllList()
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .onEach {
+                    readAllData.postValue(it)
+                }
+                .launchIn(scope)
+        }
     }
-
 }

@@ -62,6 +62,10 @@ class SpaceXListAdapter(private val listener: Listener) :
                 rocketImage.visibility = View.GONE
                 binding.favBtn.visibility = View.GONE
             }
+            if(data.favorite == true){
+                binding.favBtn.isChecked = true
+                if (binding.favBtn.isChecked) println("olduuu")
+            }
             binding.root.setOnClickListener {
                 listener.onItemClick(data)
             }

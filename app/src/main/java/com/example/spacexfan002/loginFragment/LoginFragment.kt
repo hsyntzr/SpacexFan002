@@ -1,6 +1,8 @@
 package com.example.spacexfan002.loginFragment
 
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -62,11 +64,11 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
                 val mainActivity = (activity as MainActivity)
                 mainActivity.binding.bottomNavigationView.visibility = View.VISIBLE
+                mainActivity.setSharedPref(true)
                 mainActivity.replaceFragment(RocketsFragment())
             }.addOnFailureListener {
                 Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
             }
         }
     }
-
 }

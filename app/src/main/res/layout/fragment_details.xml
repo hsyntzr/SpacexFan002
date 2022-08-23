@@ -11,16 +11,14 @@
     android:orientation="vertical"
     android:background="@drawable/dateils_background"
     >
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="30dp"
-        android:layout_margin="16dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:padding="@dimen/back_button_padding"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:src="@drawable/backbutton"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -29,15 +27,15 @@
         tools:ignore="ContentDescription,HardcodedText" />
     <TextView
         android:id="@+id/rocketName"
-        android:layout_width="289dp"
-        android:layout_height="20dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:text="@string/spacex_details"
-        android:layout_marginTop="16dp"
-
         android:textSize="17.3sp"
         android:textColor="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintEnd_toStartOf="@+id/favBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
@@ -45,32 +43,13 @@
         android:id="@+id/favBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="44dp"
+        android:padding="@dimen/back_button_padding"
         android:button="@drawable/selector_wishlist_item"
         android:gravity="center"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
-</LinearLayout>
-    <!--
-
-            <CheckBox
-                android:id="@+id/favBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginEnd="6dp"
-                android:button="@drawable/selector_wishlist_item"
-                android:buttonTint="@color/white"
-                android:checked="false"
-                android:gravity="center"
-                android:textColor="@color/black"
-
-                />
--->
+</androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -144,20 +123,4 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
         </LinearLayout>
     </ScrollView>
-
-
-    <!--  <androidx.viewpager2.widget.ViewPager2
-          android:id="@+id/viewPager2"
-          android:layout_width="0dp"
-          android:layout_height="250dp"
-          android:paddingStart="80dp"
-          android:paddingEnd="80dp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="1.0"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/textView4"
-          app:layout_constraintVertical_bias="1.0" />
-
-  -->
 </LinearLayout>

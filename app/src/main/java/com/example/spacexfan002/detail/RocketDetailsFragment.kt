@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,9 @@ import com.example.spacexfan002.databinding.FragmentDetailsBinding
 import com.example.spacexfan002.favorite.favdata.Favorites
 import com.example.spacexfan002.rockets.RocketViewModel
 import com.example.spacexfan002.rockets.RocketsFragment
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class RocketDetailsFragment : Fragment() {
@@ -23,11 +27,13 @@ class RocketDetailsFragment : Fragment() {
     private var viewModel: RocketViewModel? = null
     private var updateFavorites: Favorites? = null
     private lateinit var recyclerAdapter: ImageContainerAdapter
+    private lateinit var firestore: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[RocketViewModel::class.java]
-
+        firestore = Firebase.firestore
     }
 
 
@@ -92,6 +98,33 @@ class RocketDetailsFragment : Fragment() {
             )
         }
         viewModel?.updateFavorite(updateFavorites!!)
+
+
+        val favoriteMap = hashMapOf<String,Any>()
+        favoriteMap["id"] = favorites.id
+        favoriteMap["favorite"] = binding.favBtn.isChecked
+        favoriteMap["name"] = favorites.name!!
+        favoriteMap["img"] = favorites.img.toString()
+        favoriteMap["details"] = favorites.details.toString()
+        favoriteMap["upcoming"] = favorites.upcoming!!
+        favoriteMap["date_precision"] = favorites.date_precision!!
+        favoriteMap["date_local"] = favorites.date_local!!
+        favoriteMap["flight_number"] = favorites.flight_number!!
+        favoriteMap["original"] = favorites.original
+        if (binding.favBtn.isChecked) {
+            firestore.collection("Favorites").document(favorites.id).set(favoriteMap)
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Favorilere Eklendi",Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), it.localizedMessage?.toString(), Toast.LENGTH_LONG)
+                        .show()
+                }
+        }else{
+            firestore.collection("Favorites").document(favorites.id).delete().addOnSuccessListener {
+                Toast.makeText(context, "Favoriden çıkarıldı", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
     private fun initRecyclerView(favorites: ArrayList<String>) {
@@ -102,13 +135,13 @@ class RocketDetailsFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers(favorites: ArrayList<String>) {
-        viewModel?.getAllList()?.observe(viewLifecycleOwner) {
+       /* viewModel?.allListLivedata?.observe(viewLifecycleOwner) {
 
             if (it != null) {
                 recyclerAdapter.setSpacexList(favorites)
                 recyclerAdapter.notifyDataSetChanged()
             }
-        }
+        }*/
     }
 
 
