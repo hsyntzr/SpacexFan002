@@ -66,7 +66,7 @@ class RocketDetailsFragment : Fragment() {
             (activity as MainActivity).replaceFragment(RocketsFragment())
         }
         initRecyclerView(spaceXModel.original)
-        initObservers(spaceXModel.original)
+       // initObservers(spaceXModel.original)
     }
 
     private fun favChecked(favorites: Favorites) {
@@ -135,7 +135,7 @@ class RocketDetailsFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers(favorites: ArrayList<String>) {
-       /* viewModel?.allListLivedata?.observe(viewLifecycleOwner) {
+       /*viewModel?.allListLivedata?.observe(viewLifecycleOwner) {
 
             if (it != null) {
                 recyclerAdapter.setSpacexList(favorites)

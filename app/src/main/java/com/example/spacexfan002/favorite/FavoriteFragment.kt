@@ -68,6 +68,7 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observers() {
         favoriteViewModel.readAllData.observe(viewLifecycleOwner) {
             if (it != null) {
