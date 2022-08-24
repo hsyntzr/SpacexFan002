@@ -2,10 +2,8 @@ package com.example.spacexfan002.rockets
 
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.spacexfan002.data.SpaceXModel
-import com.example.spacexfan002.favorite.favdata.FavoriteDao
 import com.example.spacexfan002.favorite.favdata.FavoriteDatabase
 import com.example.spacexfan002.favorite.favdata.FavoriteRepository
 import com.example.spacexfan002.favorite.favdata.Favorites
@@ -25,7 +23,6 @@ import retrofit2.Response
 class RocketViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: FavoriteRepository
     private var firestore: FirebaseFirestore = Firebase.firestore
-    private lateinit var favoriteDao: FavoriteDao
     val  allListLivedata = MutableLiveData<List<Favorites>>()
 
     init {
@@ -59,7 +56,7 @@ class RocketViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun listenAllList(lifecycle: Lifecycle, scope: LifecycleCoroutineScope,) {
+    fun listenAllList(lifecycle: Lifecycle, scope: LifecycleCoroutineScope) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getAllList()
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
@@ -77,21 +74,16 @@ class RocketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun checkStorage() {
-        firestore.collection("Favorites").addSnapshotListener { value, error ->
-            Log.d("error ", error?.localizedMessage.toString())
-
+        firestore.collection("Favorites").addSnapshotListener { value, _ ->
             if (value != null) {
                 if (!value.isEmpty) {
                     val documents = value.documents
                     viewModelScope.launch(Dispatchers.IO) {
                         for (document in documents) {
-
                             val id = document.get("id") as String
                             val favorite = repository.getFavorite(id)
-                            if (favorite != null){
-                                favorite.favorite = true
-                                repository.updateFavorite(favorite)
-                            }
+                            favorite.favorite = true
+                            repository.updateFavorite(favorite)
                         }
                     }
                 }

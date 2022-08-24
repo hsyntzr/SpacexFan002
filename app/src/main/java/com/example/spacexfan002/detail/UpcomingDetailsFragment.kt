@@ -29,6 +29,7 @@ class UpcomingDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args = this.arguments?.getSerializable("SpaceXModelUpcoming") as Favorites
+
         binding.upcomingID.text = "ID: " + args.id
         binding.upcomingFlight.text = "Flight Number: " + args.flight_number
         Glide.with(this).load(args.img).into(binding.imageView)
@@ -36,8 +37,12 @@ class UpcomingDetailsFragment : Fragment() {
         binding.upcomingPrecision.text = "Date Precision: " + args.date_precision
         binding.upcomingName.text = "NAME: " + args.name
         binding.title.text = args.name
-        binding.backButton.setOnClickListener {
+    }
+
+    fun backButton(view: View) {
+        view.setOnClickListener {
             (activity as MainActivity).replaceFragment(UpcomingFragment())
         }
     }
+
 }

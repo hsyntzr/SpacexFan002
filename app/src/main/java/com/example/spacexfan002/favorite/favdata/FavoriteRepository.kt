@@ -12,9 +12,8 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
     }
 
     fun addList(list: List<SpaceXModel>) {
-
         for (item in list) {
-            var favorite = Favorites(
+            val favorite = Favorites(
                 id = item.id,
                 name = item.name.toString(),
                 img = item.links?.patch?.small,
@@ -27,7 +26,6 @@ class FavoriteRepository(private val favoriteDao: FavoriteDao) {
                 original = item.links?.flickr?.original!!
             )
             favoriteDao.addFavorite(favorite)
-
         }
     }
 

@@ -64,7 +64,6 @@ class SpaceXListAdapter(private val listener: Listener) :
             }
             if(data.favorite == true){
                 binding.favBtn.isChecked = true
-                if (binding.favBtn.isChecked) println("olduuu")
             }
             binding.root.setOnClickListener {
                 listener.onItemClick(data)
@@ -75,6 +74,4 @@ class SpaceXListAdapter(private val listener: Listener) :
             }
         }
     }
-
-
 }
