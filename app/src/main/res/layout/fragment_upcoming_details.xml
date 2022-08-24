@@ -21,7 +21,8 @@
         android:src="@drawable/backbutton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        android:onClick="backButton"/>
 
         <TextView
             android:id="@+id/title"
@@ -37,73 +38,69 @@
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="ScrollViewCount">
 
-        <LinearLayout
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/ic_alarm"
+            android:contentDescription="TODO"
+            tools:ignore="ContentDescription,HardcodedText" />
+
+        <TextView
+            android:id="@+id/upcomingID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="50dp"
-                android:src="@drawable/ic_alarm"
-                android:contentDescription="TODO"
-                tools:ignore="ContentDescription,HardcodedText" />
+        <TextView
+            android:id="@+id/upcomingName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/upcomingID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+        <TextView
+            android:id="@+id/upcomingPrecision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
 
-            <TextView
-                android:id="@+id/upcomingName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+            />
 
-            <TextView
-                android:id="@+id/upcomingPrecision"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="24sp"
+        <TextView
+            android:id="@+id/upcomingDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
 
-                />
+            />
 
-            <TextView
-                android:id="@+id/upcomingDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-
-                />
-
-            <TextView
-                android:id="@+id/upcomingFlight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/upcomingFlight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
     </ScrollView>
 
 

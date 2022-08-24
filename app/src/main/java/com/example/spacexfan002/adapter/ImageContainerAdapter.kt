@@ -12,9 +12,6 @@ import com.example.spacexfan002.databinding.ImageContainerBinding
 class ImageContainerAdapter(spaceXListOriginal: List<String>) : RecyclerView.Adapter<ImageContainerAdapter.myViewHolder>() {
 
     private var spacexList = spaceXListOriginal
-    fun setSpacexList(rockets: List<String>) {
-        this.spacexList = rockets
-    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
@@ -27,7 +24,6 @@ class ImageContainerAdapter(spaceXListOriginal: List<String>) : RecyclerView.Ada
     }
 
     override fun getItemCount(): Int {
-
         return spacexList.size
     }
 
@@ -35,7 +31,6 @@ class ImageContainerAdapter(spaceXListOriginal: List<String>) : RecyclerView.Ada
     class myViewHolder(binding: ImageContainerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: String) {
                 Glide.with(itemView).load(data).into(itemView.findViewById(R.id.imageViewDetails))
-                println(data)
         }
     }
 }

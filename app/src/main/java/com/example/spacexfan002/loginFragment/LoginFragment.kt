@@ -1,14 +1,12 @@
 package com.example.spacexfan002.loginFragment
 
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.spacexfan002.MainActivity
 import com.example.spacexfan002.databinding.FragmentLoginBinding
 import com.example.spacexfan002.rockets.RocketsFragment
@@ -48,7 +46,7 @@ class LoginFragment : Fragment() {
         binding.loginBtn.setOnClickListener {
             signInBtn()
         }
-        binding.registerbtn.setOnClickListener{
+        binding.registerbtn.setOnClickListener {
             (activity as MainActivity).replaceFragment(RegisterFragment())
         }
     }
@@ -61,14 +59,18 @@ class LoginFragment : Fragment() {
         if (email.isEmpty() && password.isEmpty()) {
             Toast.makeText(context, "Enter email and password! ", Toast.LENGTH_LONG).show()
         } else {
-            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-                val mainActivity = (activity as MainActivity)
-                mainActivity.binding.bottomNavigationView.visibility = View.VISIBLE
-                mainActivity.setSharedPref(true)
-                mainActivity.replaceFragment(RocketsFragment())
-            }.addOnFailureListener {
-                Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
-            }
+            firebaseAuthSignIn(email, password)
+        }
+    }
+
+    fun firebaseAuthSignIn(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+            val mainActivity = (activity as MainActivity)
+            mainActivity.binding.bottomNavigationView.visibility = View.VISIBLE
+            mainActivity.setSharedPref(true)
+            mainActivity.replaceFragment(RocketsFragment())
+        }.addOnFailureListener {
+            Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
         }
     }
 }

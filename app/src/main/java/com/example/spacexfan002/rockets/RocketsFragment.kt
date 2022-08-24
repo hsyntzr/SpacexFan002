@@ -9,13 +9,11 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.spacexfan002.MainActivity
 import com.example.spacexfan002.adapter.SpaceXListAdapter
-import com.example.spacexfan002.data.SpaceXModel
 import com.example.spacexfan002.databinding.FragmentRocketsBinding
 import com.example.spacexfan002.detail.RocketDetailsFragment
 import com.example.spacexfan002.favorite.favdata.Favorites
@@ -37,7 +35,6 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
-    private lateinit var favorites: List<Favorites>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +49,7 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentRocketsBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -67,7 +62,7 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
             (activity as MainActivity).replaceFragment(LoginFragment())
         }
 
-        if ((activity as MainActivity).getSharedPref()){
+        if ((activity as MainActivity).getSharedPref()) {
             (activity as MainActivity).setSharedPref(false)
             viewModel?.makeAPICall()
         }
@@ -83,12 +78,12 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
     @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
 
-        viewModel?.allListLivedata?.observe(viewLifecycleOwner, Observer {
+        viewModel?.allListLivedata?.observe(viewLifecycleOwner) {
             if (it != null) {
                 recyclerAdapter.setSpacexList(it.filter { spaceXModel -> !spaceXModel.upcoming!! })
                 recyclerAdapter.notifyDataSetChanged()
             }
-        })
+        }
         viewModel?.listenAllList(this.lifecycle, this.lifecycleScope)
     }
 
@@ -103,7 +98,7 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
 
     override fun onCheckedClick(checkBox: CheckBox, spaceXModel: Favorites) {
 
-        val favoriteMap = hashMapOf<String,Any>()
+        val favoriteMap = hashMapOf<String, Any>()
         favoriteMap["id"] = spaceXModel.id
         favoriteMap["favorite"] = checkBox.isChecked
         favoriteMap["name"] = spaceXModel.name!!
@@ -117,17 +112,21 @@ class RocketsFragment : Fragment(), SpaceXListAdapter.Listener {
         if (checkBox.isChecked) {
             firestore.collection("Favorites").document(spaceXModel.id).set(favoriteMap)
                 .addOnSuccessListener {
-                    Toast.makeText(context, "Favorilere Eklendi",Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Favorilere Eklendi", Toast.LENGTH_LONG).show()
                 }.addOnFailureListener {
-                Toast.makeText(requireContext(), it.localizedMessage?.toString(), Toast.LENGTH_LONG)
-                    .show()
-            }
-        }else{
-            firestore.collection("Favorites").document(spaceXModel.id).delete().addOnSuccessListener {
-                Toast.makeText(context, "Favoriden çıkarıldı", Toast.LENGTH_LONG).show()
-            }
+                    Toast.makeText(
+                        requireContext(),
+                        it.localizedMessage?.toString(),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+        } else {
+            firestore.collection("Favorites").document(spaceXModel.id).delete()
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Favoriden çıkarıldı", Toast.LENGTH_LONG).show()
+                }
         }
-        Log.d("Fatih", "onCheckboxClick worked")
         spaceXModel.favorite = checkBox.isChecked
         val updateFavorites = Favorites(
             spaceXModel.id,

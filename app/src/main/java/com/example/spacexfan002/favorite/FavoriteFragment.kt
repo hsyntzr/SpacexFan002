@@ -77,7 +77,7 @@ class FavoriteFragment : Fragment(), SpaceXListAdapter.Listener {
             }
         }
 
-        favoriteViewModel?.listenAllList(this.lifecycle, this.lifecycleScope)
+        favoriteViewModel.listenAllList(this.lifecycle, this.lifecycleScope)
     }
 
     override fun onItemClick(spaceXModel: Favorites) {
